@@ -54,16 +54,9 @@
     </div>
     
     <script>
-        const catalogItems = [
-            { image: "A004.png", model: "A004", category: "Film Dispenser", manufacturer: "CFS Brands", mfgModel: "SW1218", spec: "San Jamar - Saf-T-Wrap® Station Dispenser" },
-            { image: "A005.png", model: "A005", category: "Film Dispenser", manufacturer: "TableCraft Products", mfgModel: "KK3", spec: "Cash & Carry KenKut™ 3 Dispenser" },
-            { image: "A054.png", model: "A054", category: "Butter Spreader", manufacturer: "Prince Castle", mfgModel: "50", spec: "Dress-up Butter Spreader/Melter, 48 oz. capacity" },
-            { image: "A054A.png", model: "A054A", category: "Butter Spreader", manufacturer: "FMP", mfgModel: "133-1754", spec: "Butter Roller, stainless steel" },
-            { image: "B003A.png", model: "B003A", category: "Check Spindle", manufacturer: "TableCraft Products", mfgModel: "172", spec: "Check Spindle, 3-1/2\" x 6\", brass plated" },
-            // Additional items will be inserted dynamically
-        ];
-
-        function loadCatalog() {
+        async function loadCatalog() {
+            const response = await fetch('catalog.json'); // Load data from external file
+            const catalogItems = await response.json();
             const catalogBody = document.getElementById("catalog-body");
             catalogBody.innerHTML = "";
             
@@ -100,5 +93,6 @@
     </script>
 </body>
 </html>
+
 
 
