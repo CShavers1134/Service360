@@ -33,25 +33,8 @@
                     <th>Quantity</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td><img src="A004.png" alt="A004"></td>
-                    <td>A004</td>
-                    <td>Film Dispenser</td>
-                    <td>CFS Brands</td>
-                    <td>SW1218</td>
-                    <td>San Jamar - Saf-T-Wrap® Station Dispenser</td>
-                    <td><input type="number" min="0" value="0"></td>
-                </tr>
-                <tr>
-                    <td><img src="A005.png" alt="A005"></td>
-                    <td>A005</td>
-                    <td>Film Dispenser</td>
-                    <td>TableCraft Products</td>
-                    <td>KK3</td>
-                    <td>Cash & Carry KenKut™ 3 Dispenser</td>
-                    <td><input type="number" min="0" value="0"></td>
-                </tr>
+            <tbody id="catalog-body">
+                <!-- Catalog items will be dynamically inserted here -->
             </tbody>
         </table>
         
@@ -71,12 +54,39 @@
     </div>
     
     <script>
+        const catalogItems = [
+            { image: "A004.png", model: "A004", category: "Film Dispenser", manufacturer: "CFS Brands", mfgModel: "SW1218", spec: "San Jamar - Saf-T-Wrap® Station Dispenser" },
+            { image: "A005.png", model: "A005", category: "Film Dispenser", manufacturer: "TableCraft Products", mfgModel: "KK3", spec: "Cash & Carry KenKut™ 3 Dispenser" },
+            { image: "A054.png", model: "A054", category: "Butter Spreader", manufacturer: "Prince Castle", mfgModel: "50", spec: "Dress-up Butter Spreader/Melter, 48 oz. capacity" },
+            { image: "A054A.png", model: "A054A", category: "Butter Spreader", manufacturer: "FMP", mfgModel: "133-1754", spec: "Butter Roller, stainless steel" },
+            { image: "B003A.png", model: "B003A", category: "Check Spindle", manufacturer: "TableCraft Products", mfgModel: "172", spec: "Check Spindle, 3-1/2\" x 6\", brass plated" },
+            // Additional items will be inserted dynamically
+        ];
+
+        function loadCatalog() {
+            const catalogBody = document.getElementById("catalog-body");
+            catalogBody.innerHTML = "";
+            
+            catalogItems.forEach(item => {
+                let row = `<tr>
+                    <td><img src="${item.image}" alt="${item.model}"></td>
+                    <td>${item.model}</td>
+                    <td>${item.category}</td>
+                    <td>${item.manufacturer}</td>
+                    <td>${item.mfgModel}</td>
+                    <td>${item.spec}</td>
+                    <td><input type="number" min="0" value="0"></td>
+                </tr>`;
+                catalogBody.innerHTML += row;
+            });
+        }
+
         function prepareOrder() {
-            let table = document.getElementById("catalog");
+            let table = document.getElementById("catalog-body");
             let rows = table.getElementsByTagName("tr");
             let order = "";
             
-            for (let i = 1; i < rows.length; i++) {
+            for (let i = 0; i < rows.length; i++) {
                 let cols = rows[i].getElementsByTagName("td");
                 let quantity = cols[6].getElementsByTagName("input")[0].value;
                 if (quantity > 0) {
@@ -85,6 +95,8 @@
             }
             document.getElementById("orderDetails").value = order;
         }
+
+        window.onload = loadCatalog;
     </script>
 </body>
 </html>
