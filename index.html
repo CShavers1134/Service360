@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; background-color: #f8f9fa; }
+        .container { width: 80%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+        button { background-color: #28a745; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px; }
+        button:hover { background-color: #218838; }
+        img { width: 50px; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Service Portal</h1>
+        
+        <h2>Catalog</h2>
+        <table id="catalog">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Model</th>
+                    <th>Category</th>
+                    <th>Manufacturer</th>
+                    <th>Mfg Model</th>
+                    <th>Specification</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="images/A004.png" alt="A004"></td>
+                    <td>A004</td>
+                    <td>Film Dispenser</td>
+                    <td>CFS Brands</td>
+                    <td>SW1218</td>
+                    <td>San Jamar - Saf-T-Wrap® Station Dispenser</td>
+                    <td><input type="number" min="0" value="0"></td>
+                </tr>
+                <tr>
+                    <td><img src="images/A005.png" alt="A005"></td>
+                    <td>A005</td>
+                    <td>Film Dispenser</td>
+                    <td>TableCraft Products</td>
+                    <td>KK3</td>
+                    <td>Cash & Carry KenKut™ 3 Dispenser</td>
+                    <td><input type="number" min="0" value="0"></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>Order Form</h2>
+        <form id="orderForm" action="https://formsubmit.co/cshavers@dykesfoodservice.com" method="POST">
+            <input type="hidden" name="_subject" value="New Order Submission">
+            <input type="hidden" name="orderDetails" id="orderDetails">
+            
+            <input type="text" name="store_number" placeholder="Store Number" required>
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="tel" name="phone" placeholder="Your Phone" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Additional Instructions"></textarea>
+            
+            <button type="submit" onclick="prepareOrder()">Submit Order</button>
+        </form>
+    </div>
+    
+    <script>
+        function prepareOrder() {
+            let table = document.getElementById("catalog");
+            let rows = table.getElementsByTagName("tr");
+            let order = "";
+            
+            for (let i = 1; i < rows.length; i++) {
+                let cols = rows[i].getElementsByTagName("td");
+                let quantity = cols[6].getElementsByTagName("input")[0].value;
+                if (quantity > 0) {
+                    order += cols[1].innerText + " - " + quantity + "\n";
+                }
+            }
+            document.getElementById("orderDetails").value = order;
+        }
+    </script>
+</body>
+</html>
+
